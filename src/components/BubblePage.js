@@ -8,20 +8,19 @@ import ColorList from "./ColorList";
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
 
-  const history = useHistory()
-    axiosWithAuth()
-    .get("./colors")
-    .then(res => {
-      setColorList(res.data)
-      history.push('/bubble-page')
-    })
-    .catch(err => {
-      console.log({err})
-      history.push("/")
-    })
-  useEffect(() => {
-
+const bubbleData = () => {
+  axiosWithAuth()
+  .get("/colors")
+  .then(res => {
+    setColorList(res.data)
   })
+  .catch(err => {
+    console.log(err.res, "well?")
+  })
+}
+
+useEffect(bubbleData, [])
+
   return (
     <div className="container">
       <ColorList colors={colorList} updateColors={setColorList} />
